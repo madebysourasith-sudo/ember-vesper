@@ -2312,7 +2312,7 @@ const PODIUM = (() => {
   const ld = new THREE.TextureLoader(), ST = window.__STONE || {};
   const vcv = document.createElement('canvas'); vcv.width = vcv.height = 1024; const vctx = vcv.getContext('2d');
   const map = new THREE.CanvasTexture(vcv); map.colorSpace = THREE.SRGBColorSpace;
-  { const im = new Image(); im.onload = () => {
+  { const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => {
       vctx.filter = 'grayscale(1) brightness(.4) contrast(.6)'; vctx.drawImage(im, 0, 0, 1024, 1024); vctx.filter = 'none';
       for (let i = 0; i < 26; i++) { const x = rnd() * 1024, y = rnd() * 1024, r = 150 + rnd() * 230, light = rnd() > 0.5;
         for (const ox of [0, -1024, 1024]) for (const oy of [0, -1024, 1024]) { const gr = vctx.createRadialGradient(x + ox, y + oy, 0, x + ox, y + oy, r);
