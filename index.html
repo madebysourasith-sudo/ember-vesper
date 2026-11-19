@@ -962,7 +962,7 @@ footer.foot{display:block;padding:clamp(72px,12vh,140px) var(--gut) 28px;color:v
     </div>
     <div class="th-card pcard">
       <div class="th-head"><span class="th-t">Thermal view</span><span class="th-chip">30 min · full load</span></div>
-      <div class="th-stage"><img src="assets/j-tower.jpg" alt="The Vesper seen through its glass side" width="756" height="946"><canvas aria-hidden="true"></canvas></div>
+      <div class="th-stage"><img src="assets/j-tower.jpg" alt="The Vesper seen through its glass side" width="756" height="946" crossorigin="anonymous"><canvas aria-hidden="true"></canvas></div>
       <div class="th-foot"><span class="th-at">Lens · Processor · 61 °C</span><span class="th-scale"><span>22°</span><i></i><span>82°</span></span></div>
     </div>
   </section>
@@ -3139,7 +3139,8 @@ document.querySelectorAll('.emb').forEach(emberBtn);
   const RAMP = [[0, 11, 6, 32], [0.18, 58, 10, 106], [0.36, 154, 26, 122], [0.55, 226, 64, 30], [0.72, 255, 154, 26], [0.88, 255, 230, 138], [1, 255, 251, 232]];
   const ramp = h => { h = Math.max(0, Math.min(1, h)); let i = 1; while (RAMP[i][0] < h) i++; const a = RAMP[i - 1], b = RAMP[i], f = (h - a[0]) / (b[0] - a[0]); return [a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f, a[3] + (b[3] - a[3]) * f]; };
   const TW = 252, TH = 315, th = document.createElement('canvas'); th.width = TW; th.height = TH;
-  function build() {
+  function build() { try { build0(); } catch (e) { console.warn('thermal view unavailable', e); } }
+  function build0() {
     const tg = th.getContext('2d'), src = document.createElement('canvas'); src.width = TW; src.height = TH; const sg = src.getContext('2d'); sg.drawImage(img, 0, 0, TW, TH);
     const px = sg.getImageData(0, 0, TW, TH).data, out = tg.createImageData(TW, TH);
     for (let y = 0; y < TH; y++) for (let x = 0; x < TW; x++) { const k = (y * TW + x) * 4, lum = (px[k] * 0.3 + px[k + 1] * 0.59 + px[k + 2] * 0.11) / 255;
